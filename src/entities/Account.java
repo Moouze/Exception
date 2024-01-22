@@ -1,5 +1,7 @@
 package entities;
 
+import exception.RegraNegocio;
+
 public class Account {
     private Integer numero;
     private String titular;
@@ -41,6 +43,15 @@ public class Account {
     saldo = saldo + quantia;
     }
     public void saque (Double quantia){
+        validacaoSaque(quantia);
         saldo = saldo - quantia;
+    }
+    private void validacaoSaque (double quantia){
+        if (quantia > getLimiteSaque()){
+            throw new RegraNegocio("Erro de saque: a quantia excede o limite de saque");
+        }
+        if (quantia > getSaldo()){
+            throw new RegraNegocio("Erro de saque: saldo insuficiente");
+        }
     }
 }
