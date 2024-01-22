@@ -1,6 +1,7 @@
 package application;
 
 import entities.Account;
+import exception.RegraNegocio;
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -24,9 +25,14 @@ public class Program {
         Account conta = new Account(numero, titular, saldo, limiteSaque);
 
         System.out.println();
-        System.out.println("Informe o valor do deposito: ");
+        System.out.println("Informe o valor do saque: ");
         double quantia = sc.nextDouble();
-        conta.deposito(quantia);
-        System.out.printf("Saldo total: %.2f", conta.getSaldo());
+        try {
+            conta.saque(quantia);
+            System.out.printf("Saldo total: %.2f", conta.getSaldo());
+        }
+        catch (RegraNegocio e){
+            System.out.println(e.getMessage());
+        }
     }
 }
